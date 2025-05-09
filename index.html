@@ -45,22 +45,26 @@
       const value = input.value;
       input.value = "";
 
-      if (value === piDigits[currentIndex]) {
-        currentIndex++;
-        currentScore++;
-        currentScoreDisplay.textContent = currentScore;
-        message.textContent = "";
-        if (currentScore > bestScore) {
-          bestScore = currentScore;
-          localStorage.setItem("bestPiScore", bestScore);
-          document.getElementById("bestScore").textContent = bestScore;
-        }
-      } else {
-        message.textContent = `Erreur ! Tu as saisi "${value}", attendu "${piDigits[currentIndex]}"`;
-        currentIndex = 0;
-        currentScore = 0;
-        currentScoreDisplay.textContent = currentScore;
-      }
+    if (value === piDigits[currentIndex]) {
+  currentIndex++;
+  currentScore++;
+  currentScoreDisplay.textContent = currentScore;
+  message.textContent = "";
+  progression.textContent += value;
+  
+  if (currentScore > bestScore) {
+    bestScore = currentScore;
+    localStorage.setItem("bestPiScore", bestScore);
+    document.getElementById("bestScore").textContent = bestScore;
+  }
+} else {
+  message.textContent = `Erreur ! Tu as saisi "${value}", attendu "${piDigits[currentIndex]}"`;
+  currentIndex = 0;
+  currentScore = 0;
+  currentScoreDisplay.textContent = currentScore;
+  progression.textContent = "";
+}
+
     });
   </script>
 </body>
