@@ -20,17 +20,32 @@
     .error {
       color: red;
     }
+    #progression {
+      font-size: 1.5rem;
+      margin-top: 10px;
+      word-wrap: break-word;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
   </style>
 </head>
 <body>
   <h1>Défi : Tape les décimales de π</h1>
   <p>Commence après 3. (premier chiffre : 1)</p>
   <input type="text" id="piInput" maxlength="1" autofocus />
-  <div id="score">Score : <span id="currentScore">0</span> | Meilleur : <span id="bestScore">0</span></div>
+  
+  <p>Ta saisie : <span id="progression"></span></p>
+
+  <div id="score">
+    Score : <span id="currentScore">0</span> |
+    Meilleur : <span id="bestScore">0</span>
+  </div>
+
   <div id="message" class="error"></div>
 
   <script>
-    const piDigits = "14159265358979323846264338327950288419716939937510"; // tu peux rallonger
+    const piDigits = "14159265358979323846264338327950288419716939937510"; // ajoute autant de chiffres que tu veux
     let currentIndex = 0;
     let currentScore = 0;
     let bestScore = localStorage.getItem("bestPiScore") || 0;
@@ -40,31 +55,31 @@
     const input = document.getElementById("piInput");
     const currentScoreDisplay = document.getElementById("currentScore");
     const message = document.getElementById("message");
+    const progression = document.getElementById("progression");
 
     input.addEventListener("input", () => {
       const value = input.value;
       input.value = "";
 
-    if (value === piDigits[currentIndex]) {
-  currentIndex++;
-  currentScore++;
-  currentScoreDisplay.textContent = currentScore;
-  message.textContent = "";
-  progression.textContent += value;
-  
-  if (currentScore > bestScore) {
-    bestScore = currentScore;
-    localStorage.setItem("bestPiScore", bestScore);
-    document.getElementById("bestScore").textContent = bestScore;
-  }
-} else {
-  message.textContent = `Erreur ! Tu as saisi "${value}", attendu "${piDigits[currentIndex]}"`;
-  currentIndex = 0;
-  currentScore = 0;
-  currentScoreDisplay.textContent = currentScore;
-  progression.textContent = "";
-}
+      if (value === piDigits[currentIndex]) {
+        currentIndex++;
+        currentScore++;
+        currentScoreDisplay.textContent = currentScore;
+        message.textContent = "";
+        progression.textContent += value;
 
+        if (currentScore > bestScore) {
+          bestScore = currentScore;
+          localStorage.setItem("bestPiScore", bestScore);
+          document.getElementById("bestScore").textContent = bestScore;
+        }
+      } else {
+        message.textContent = `Erreur ! Tu as saisi "${value}", attendu "${piDigits[currentIndex]}"`;
+        currentIndex = 0;
+        currentScore = 0;
+        currentScoreDisplay.textContent = currentScore;
+        progression.textContent = "";
+      }
     });
   </script>
 </body>
