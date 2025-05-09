@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Défi Pi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    input {
+      font-size: 2rem;
+      width: 50px;
+      text-align: center;
+    }
+    #score {
+      margin-top: 20px;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Défi : Tape les décimales de π</h1>
+  <p>Commence après 3. (premier chiffre : 1)</p>
+  <input type="text" id="piInput" maxlength="1" autofocus />
+  <div id="score">Score : <span id="currentScore">0</span> | Meilleur : <span id="bestScore">0</span></div>
+  <div id="message" class="error"></div>
+
+  <script>
+    const piDigits = "14159265358979323846264338327950288419716939937510"; // tu peux rallonger
+    let currentIndex = 0;
+    let currentScore = 0;
+    let bestScore = localStorage.getItem("bestPiScore") || 0;
+
+    document.getElementById("bestScore").textContent = bestScore;
+
+    const input = document.getElementById("piInput");
+    const currentScoreDisplay = document.getElementById("currentScore");
+    const message = document.getElementById("message");
+
+    input.addEventListener("input", () => {
+      const value = input.value;
+      input.value = "";
+
+      if (value === piDigits[currentIndex]) {
+        currentIndex++;
+        currentScore++;
+        currentScoreDisplay.textContent = currentScore;
+        message.textContent = "";
+        if (currentScore > bestScore) {
+          bestScore = currentScore;
+          localStorage.setItem("bestPiScore", bestScore);
+          document.getElementById("bestScore").textContent = bestScore;
+        }
+      } else {
+        message.textContent = `Erreur ! Tu as saisi "${value}", attendu "${piDigits[currentIndex]}"`;
+        currentIndex = 0;
+        currentScore = 0;
+        currentScoreDisplay.textContent = currentScore;
+      }
+    });
+  </script>
+</body>
+</html>
