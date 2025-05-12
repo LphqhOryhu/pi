@@ -28,6 +28,14 @@
       margin-left: auto;
       margin-right: auto;
     }
+    #checkpoints {
+      margin-top: 20px;
+    }
+    #checkpoints button {
+      margin: 5px;
+      padding: 8px 12px;
+      font-size: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -42,10 +50,11 @@
     Meilleur : <span id="bestScore">0</span>
   </div>
 
+  <div id="checkpoints"></div>
+
   <div id="message" class="error"></div>
 
   <script>
-    // La chaîne commence par 3 maintenant
     const piDigits = "31415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679"; 
     let currentIndex = 0;
     let currentScore = 0;
@@ -57,6 +66,23 @@
     const currentScoreDisplay = document.getElementById("currentScore");
     const message = document.getElementById("message");
     const progression = document.getElementById("progression");
+    const checkpointsDiv = document.getElementById("checkpoints");
+
+    // Génère des boutons tous les 10 chiffres
+    for (let i = 10; i < piDigits.length; i += 10) {
+      const btn = document.createElement("button");
+      btn.textContent = `Reprendre à ${i}`;
+      btn.addEventListener("click", () => goToCheckpoint(i));
+      checkpointsDiv.appendChild(btn);
+    }
+
+    function goToCheckpoint(index) {
+      currentIndex = index;
+      currentScore = index;
+      currentScoreDisplay.textContent = currentScore;
+      progression.textContent = piDigits.substring(0, index);
+      message.textContent = "";
+    }
 
     input.addEventListener("input", () => {
       const value = input.value;
