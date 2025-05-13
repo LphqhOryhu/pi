@@ -100,13 +100,14 @@
           localStorage.setItem("bestPiScore", bestScore);
           document.getElementById("bestScore").textContent = bestScore;
         }
-      } else {
-        message.textContent = `Erreur ! Tu as saisi "${value}", attendu "${piDigits[currentIndex]}"`;
+           } else {
+        message.textContent = `Erreur ! Tu as saisi "${value}", attendu "${piDigits[currentIndex]}". Score atteint : ${currentScore}`;
         currentIndex = 0;
         currentScore = 0;
         currentScoreDisplay.textContent = currentScore;
         progression.textContent = "";
       }
+
     });
   </script>
 </body>
